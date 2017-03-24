@@ -1,5 +1,5 @@
-const MongoClient = require('mongodb').MongoClient;
-// const {MongoClient, ObjectI} = require('mongodb');
+// const MongoClient = require('mongodb').MongoClient;
+const {MongoClient, ObjectID} = require('mongodb');
 
 MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db)=> {
     if(err){
@@ -28,18 +28,37 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db)=> {
 //     console.log('Unable to Fetch Todos', err);
 // });
 
-// Getting Data from mongodb Todos base on where conditon
-var data =  {
-    completed: true,
+// // Getting Data from mongodb Todos base on where conditon
+// var data =  {
+//     completed: true,
+// }
+// db.collection('Todos').find(data).toArray().then((docs)=>{
+//     console.log('Todos');
+//     console.log(JSON.stringify(docs, undefined, 2));
+// }, (err)=>{
+//     console.log('Unable to Fetch Todos', err);
+// });
+
+// //Deleting Data from Todos Collection by using deleteMany function
+// db.collection('Todos').deleteMany({text: 'Hello Man' }).then((result)=>{
+//     console.log(result);
+// })
+
+// //Deleting Data from Todos Collection by using deleteOne function
+// var data = {
+//     text: 'Hello Man'
+// }
+// db.collection('Todos').deleteOne(data).then((result)=>{
+//     console.log(result);
+// })
+
+//Deleting Data from Todos Collection by using findOneAndDelete function
+var data = {
+    _id: new ObjectID("58d5290fb0c1dfdd91d92e9b")
 }
-db.collection('Todos').find(data).toArray().then((docs)=>{
-    console.log('Todos');
-    console.log(JSON.stringify(docs, undefined, 2));
-}, (err)=>{
-    console.log('Unable to Fetch Todos', err);
-});
-
-
+db.collection('Todos').findOneAndDelete(data).then((result)=>{
+    console.log(result);
+})
     db.close();
 
 });
