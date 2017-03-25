@@ -52,15 +52,31 @@ connection.connect(function(err) {
 //     // fields will contain information about the returned results fields (if any) 
 //   })
 
-//Deleting data from Mysql Database User Table
-var id = '2';
-var string = `DELETE From user WHERE id = ${id}`;
-var res = connection.query(string,(err, result, fields)=>{
-if (err) {
-return console.log(error);
+// //Deleting data from Mysql Database User Table
+// var id = '2';
+// var string = `DELETE From user WHERE id = ${id}`;
+// connection.query(string,(err, result, fields)=>{
+// if (err) {
+// return console.log(error);
+// };
+
+//   console.log('deleted ' + result.affectedRows + ' rows');
+// })
+
+//Updating Record in Mysql Database User Table
+
+var post = {
+  id: '3',
+  name: 'Arslan Shafiq',
+  password: 'aplha123',
+  status: 'Project Manager'
 };
 
-  console.log('deleted ' + result.affectedRows + ' rows');
+connection.query('UPDATE user SET name = ?, password = ? WHERE id = ?', [post.name,post.password,post.id], function(err, results, fields) {
+       if (err) {
+         return console.log('Unable To Update Record');
+       }
+       console.log('Record Sucessfully Updated');
 })
 
   connection.end();
